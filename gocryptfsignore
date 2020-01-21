@@ -1,0 +1,13 @@
+# Include only the specified
+!*
+
+# Backup folders
+Code
+Documents
+Pictures
+Scripts
+Workspace
+
+# Exclude
+!.git
+!build
