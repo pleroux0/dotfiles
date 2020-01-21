@@ -1,12 +1,14 @@
 #!/bin/sh
 
+SCRIPT=$(realpath $0)
+SCRIPT_DIR=$(dirname "$SCRIPT")
+
 PYENV_ROOT=${PYENV_ROOT:-$HOME/.pyenv}
 PYENV_USER=${PYENV_USER:-$(whoami)}
 PYENV_GIT=${PYENV_GIT:-https://github.com/pyenv/pyenv.git}
 PYENV_VIRTUALENV_GIT=${PYENV_VIRTUALENV_GIT:-https://github.com/pyenv/pyenv-virtualenv.git}
 
-# Create directories
-mkdir -p "$HOME/.shrc.d"
+# Create directory
 mkdir -p "$PYENV_ROOT"
 
 # Update/Install pyenv
@@ -24,11 +26,12 @@ else
 fi
 
 # Create initialization script
-echo 'if [ -n "$PYENV_ENABLED" ]; then return 0; fi' > $HOME/.shrc.d/pyenv.sh
-echo "export PYENV_ENABLED=1" >> $HOME/.shrc.d/pyenv.sh
-echo "export PATH=$PYENV_ROOT/bin:\$PATH" >> $HOME/.shrc.d/pyenv.sh
-echo 'eval "$(pyenv init -)"' >> $HOME/.shrc.d/pyenv.sh
-echo 'eval "$(pyenv virtualenv-init -)"' >> $HOME/.shrc.d/pyenv.sh
+PYENV_INIT_SCRIPT=$SCRIPT_DIR/../shrc.d/pyenv.sh
+echo 'if [ -n "$PYENV_ENABLED" ]; then return 0; fi' > $PYENV_INIT_SCRIPT
+echo "export PYENV_ENABLED=1" >> $PYENV_INIT_SCRIPT
+echo "export PATH=$PYENV_ROOT/bin:\$PATH" >> $PYENV_INIT_SCRIPT
+echo 'eval "$(pyenv init -)"' >> $PYENV_INIT_SCRIPT
+echo 'eval "$(pyenv virtualenv-init -)"' >> $PYENV_INIT_SCRIPT
 
 #Auto completions
 echo 'if [ -n "$BASH" ]; then source $(pyenv root)/completions/pyenv.bash; fi' >> $HOME/.shrc.d/pyenv.sh
