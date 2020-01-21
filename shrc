@@ -1,0 +1,9 @@
+#!/bin/sh
+
+export LD_LIBRARY_PATH=/home/`whoami`/.local/lib64:$PATH
+export LD_LIBRARY_PATH=/home/`whoami`/.local/lib:$PATH
+export PATH=/home/`whoami`/.local/bin:$PATH
+
+for file in ~/.shrc.d/*; do
+  source "$file"
+done
